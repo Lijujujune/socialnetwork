@@ -1,118 +1,70 @@
-const names = [
-  'Aaran',
-  'Aaren',
-  'Aarez',
-  'Aarman',
-  'Aaron',
-  'Aaron-James',
-  'Aarron',
-  'Aaryan',
-  'Aaryn',
-  'Aayan',
-  'Aazaan',
-  'Abaan',
-  'Abbas',
-  'Abdallah',
-  'Abdalroof',
-  'Abdihakim',
-  'Abdirahman',
-  'Abdisalam',
-  'Abdul',
-  'Abdul-Aziz',
-  'Abdulbasir',
-  'Abdulkadir',
-  'Abdulkarem',
-  'Smith',
-  'Jones',
-  'Coollastname',
-  'enter_name_here',
-  'Ze',
-  'Zechariah',
-  'Zeek',
-  'Zeeshan',
-  'Zeid',
-  'Zein',
-  'Zen',
-  'Zendel',
-  'Zenith',
-  'Zennon',
-  'Zeph',
-  'Zerah',
-  'Zhen',
-  'Zhi',
-  'Zhong',
-  'Zhuo',
-  'Zi',
-  'Zidane',
-  'Zijie',
-  'Zinedine',
-  'Zion',
-  'Zishan',
-  'Ziya',
-  'Ziyaan',
-  'Zohaib',
-  'Zohair',
-  'Zoubaeir',
-  'Zubair',
-  'Zubayr',
-  'Zuriel',
-  'Xander',
-  'Jared',
-  'Courtney',
-  'Gillian',
-  'Clark',
-  'Jared',
-  'Grace',
-  'Kelsey',
-  'Tamar',
-  'Alex',
-  'Mark',
-  'Tamar',
-  'Farish',
-  'Sarah',
-  'Nathaniel',
-  'Parker',
+const { Types } = require('mongoose');
+
+// Use ObjectId references for friends
+const users = [
+  {
+    username: 'john_doe',
+    email: 'john@example.com',
+    thoughts: [],
+    friends: [] // This will be populated later with ObjectId references
+  },
+  {
+    username: 'jane_doe',
+    email: 'jane@example.com',
+    thoughts: [],
+    friends: [] // This will be populated later with ObjectId references
+  },
+  {
+    username: 'sam_smith',
+    email: 'sam@example.com',
+    thoughts: [],
+    friends: [] // This will be populated later with ObjectId references
+  },
+  {
+    username: 'sarawong',
+    email: 'saraw@example.com',
+    thoughts: [],
+    friends: [] // This will be populated later with ObjectId references
+  },
+  {
+    username: 'amykim',
+    email: 'amykim@sample.com',
+    thoughts: [],
+    friends: [] // This will be populated later with ObjectId references
+  },
 ];
 
-const appDescriptions = [
-  'Decision Tracker',
-  'Find My Phone',
-  'Learn Piano',
-  'Starbase Defender',
-  'Tower Defense',
-  'Monopoly Money Manager',
-  'Movie trailers',
-  'Hello world',
-  'Stupid Social Media App',
-  'Notes',
-  'Messages',
-  'Email',
-  'Compass',
-  'Firefox',
-  'Running app',
-  'Cooking app',
-  'Poker',
-  'Deliveries',
+const thoughts = [
+  {
+    thoughtText: 'This is my first thought!',
+    username: 'john_doe',
+    reactions: [
+      {
+        reactionBody: 'Nice thought!',
+        username: 'amykim',
+      }
+    ]
+  },
+  {
+    thoughtText: 'Loving this social network API!',
+    username: 'sam_smith',
+    reactions: [
+      {
+        reactionBody: 'Totally agree!',
+        username: 'john_doe',
+      }
+    ]
+  },
+  {
+    thoughtText: 'Great work buddy!',
+    username: 'sarawong',
+    reactions: [
+      {
+        reactionBody: 'Can’t agree more!',
+        username: 'amykim',
+      }
+    ]
+  },
 ];
 
-// Get a random item given an array
-const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-// Gets a random full name
-const getRandomName = () =>
-  `${getRandomArrItem(names)} ${getRandomArrItem(names)}`;
-
-// Function to generate random assignments that we can add to student object.
-const getRandomAssignments = (int) => {
-  const results = [];
-  for (let i = 0; i < int; i++) {
-    results.push({
-      assignmentName: getRandomArrItem(appDescriptions),
-      score: Math.floor(Math.random() * (99 - 70 + 1) + 70),
-    });
-  }
-  return results;
-};
-
-// Export the functions for use in seed.js
-module.exports = { getRandomName, getRandomAssignments };
+module.exports = { users, thoughts };

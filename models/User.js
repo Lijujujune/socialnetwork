@@ -1,6 +1,4 @@
 const { Schema, model } = require('mongoose');
-const Thought = require('./thought');
-
 
 // Schema to create user model
 const userSchema = new Schema(
@@ -9,7 +7,7 @@ const userSchema = new Schema(
       type: String,
       unique: true,
       required: true,
-      trimmed: true,
+      trim: true, // Use "trim" instead of "trimmed"
     },
     email: {
       type: String,
@@ -19,23 +17,30 @@ const userSchema = new Schema(
     },
     thoughts: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Thought',  // References Thought model
+        type: Schema.Types.ObjectId, // Use Schema.Types.ObjectId directly
+        ref: 'Thought', // References Thought model
       },
     ],
     friends: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',  // Self-reference to User model
+        type: Schema.Types.ObjectId, // Use Schema.Types.ObjectId directly
+        ref: 'User', // Self-reference to User model
       },
     ],
-  });
-  
-  // Virtual to get the count of friends
-  userSchema.virtual('friendCount').get(function() {
-    return this.friends.length;
-  });
-  
+  },
+  {
+    toJSON: {
+      virtuals: true, // Enable virtuals in toJSON
+    },
+    id: false, // Prevent automatic creation of id field
+  }
+);
+
+// Virtual to get the count of friends
+userSchema.virtual('friendCount').get(function() {
+  return this.friends.length;
+});
+
 const User = model('User', userSchema);
 
 module.exports = User;
