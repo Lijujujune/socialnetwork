@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 module.exports = {
   // Get all users
@@ -40,23 +40,35 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // Delete a user by ID
-  deleteUser(req, res) {
-    User.findByIdAndDelete(req.params.userId)
-      .then((user) => {
-        if (!user) {
-          return res.status(404).json({ message: 'No user found with this ID' });
-        }
-        res.json({ message: 'User successfully deleted' });
-      })
-      .catch((err) => res.status(500).json(err));
-  },
+// Delete a user by ID
+deleteUser(req, res) {
+  User.findByIdAndDelete(req.params.userId)
+    .then(async (user) => {
+      if (!user) {
+        return res.status(404).json({ message: 'No user found with this ID' });
+      }
+
+      // Delete associated thoughts by username
+      const result = await Thought.deleteMany({ username: user.username });
+      if (result.deletedCount === 0) {
+        console.log('No thoughts found for this user.');
+      } else {
+        console.log(`${result.deletedCount} thoughts deleted.`);
+      }
+
+      res.json({ message: 'User and associated thoughts successfully deleted' });
+    })
+    .catch((err) => {
+      console.error('Error deleting user:', err);
+      res.status(500).json(err);
+    });
+},
 
   // Add a friend
   addFriend(req, res) {
     User.findByIdAndUpdate(
       req.params.userId,
-      { $addToSet: { friends: req.params.friendId } },
+      { $addToSet: { friends: req.params.friendId } }, // Use $addToSet to prevent duplicates
       { new: true }
     )
       .then((user) => {
