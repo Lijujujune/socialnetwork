@@ -112,14 +112,14 @@ module.exports = {
     try {
       const thought = await Thought.findByIdAndUpdate(
         req.params.thoughtId,
-        { $pull: { reactions: { reactionId: req.params.reactionId } } },
-        { new: true }
+        { $pull: { reactions: { _id: req.params.reactionId } } }, // Targeting the reaction by its _id
+        { new: true } // Return the updated thought
       );
-
+  
       if (!thought) {
         return res.status(404).json({ message: 'No thought found with that ID!' });
       }
-
+  
       res.json(thought);
     } catch (err) {
       res.status(500).json(err);
