@@ -70,23 +70,27 @@ module.exports = {
     }
   },
 
-  // Delete a thought
-  async deleteThought(req, res) {
-    try {
-      const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
+// Delete a thought
+async deleteThought(req, res) {
+  try {
+    // Find and delete the thought by ID
+    const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
 
-      if (!thought) {
-        return res.status(404).json({ message: 'No thought found with this ID!' });
-      }
-
-      // Optionally remove the thought from the user's thoughts array
-      await User.findByIdAndUpdate(thought.username, { $pull: { thoughts: thought._id } });
-
-      res.json({ message: 'Thought deleted!' });
-    } catch (err) {
-      res.status(500).json(err);
+    if (!thought) {
+      return res.status(404).json({ message: 'No thought found with this ID!' });
     }
-  },
+    const user = await User.findOne({ username: thought.username });
+    if (user) {
+      await User.findByIdAndUpdate(user._id, { $pull: { thoughts: thought._id } });
+    } else {
+      console.error('User not found for username:', thought.username);
+    }
+
+    res.json({ message: 'Thought deleted!' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+},
 
   // Add a reaction
   async addReaction(req, res) {
@@ -112,8 +116,8 @@ module.exports = {
     try {
       const thought = await Thought.findByIdAndUpdate(
         req.params.thoughtId,
-        { $pull: { reactions: { _id: req.params.reactionId } } }, // Targeting the reaction by its _id
-        { new: true } // Return the updated thought
+        { $pull: { reactions: { _id: req.params.reactionId } } }, 
+        { new: true } 
       );
   
       if (!thought) {
