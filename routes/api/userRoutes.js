@@ -7,7 +7,7 @@ router.route('/')
   .post(createUser);      // Create a new user
 
 // /api/users/:id
-router.route('/:userid')
+router.route('/:userId')
   .get(getUserById)       // Get a single user by id
   .put(updateUser)        // Update a user by id
   .delete(deleteUser);    // Delete a user by id

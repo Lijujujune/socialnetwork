@@ -30,10 +30,19 @@ module.exports = {
   // Create a thought
   async createThought(req, res) {
     try {
+      // Check if the user exists
+      const user = await User.findOne({ username: req.body.username });
+      
+      if (!user) {
+        return res.status(404).json({ message: 'User not found. Cannot post thought for a non-existent user.' });
+      }
+
+      // Create the thought since user exists
       const thought = await Thought.create(req.body);
 
-      // Update the user who created the thought
-      await User.findByIdAndUpdate(req.body.userId, { $push: { thoughts: thought._id } }, { new: true });
+      // Push the thought into the user's thoughts array
+      user.thoughts.push(thought._id);
+      await user.save();
 
       res.json(thought);
     } catch (err) {

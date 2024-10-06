@@ -4,7 +4,6 @@ module.exports = {
   // Get all users
   getUsers(req, res) {
     User.find()
-      .populate('thoughts friends') // Populate thoughts and friends
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
@@ -25,13 +24,13 @@ module.exports = {
   // Create a new user
   createUser(req, res) {
     User.create(req.body)
-      .then((user) => res.status(201).json(user)) // Return 201 for created resource
+      .then((user) => res.status(201).json(user))
       .catch((err) => res.status(500).json(err));
   },
 
   // Update a user by ID
   updateUser(req, res) {
-    User.findByIdAndUpdate(req.params.userId, req.body, { new: true, runValidators: true }) // Ensure runValidators is true
+    User.findByIdAndUpdate(req.params.userId, req.body, { new: true, runValidators: true }) 
       .then((user) => {
         if (!user) {
           return res.status(404).json({ message: 'No user found with this ID' });
@@ -57,7 +56,7 @@ module.exports = {
   addFriend(req, res) {
     User.findByIdAndUpdate(
       req.params.userId,
-      { $addToSet: { friends: req.params.friendId } }, // Use $addToSet to prevent duplicates
+      { $addToSet: { friends: req.params.friendId } },
       { new: true }
     )
       .then((user) => {
@@ -73,7 +72,7 @@ module.exports = {
   removeFriend(req, res) {
     User.findByIdAndUpdate(
       req.params.userId,
-      { $pull: { friends: req.params.friendId } }, // Use $pull to remove friend
+      { $pull: { friends: req.params.friendId } }, 
       { new: true }
     )
       .then((user) => {

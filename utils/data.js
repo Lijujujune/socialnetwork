@@ -36,7 +36,7 @@ const users = [
 
 const thoughts = [
   {
-    thoughtText: 'This is my first thought!',
+    thoughtText: 'I think this is pretty cool!',
     username: 'john_doe',
     reactions: [
       {
