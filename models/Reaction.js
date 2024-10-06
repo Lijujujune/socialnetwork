@@ -2,8 +2,9 @@ const { Schema } = require('mongoose');
 
 // Schema to create a reaction model
 const reactionSchema = new Schema(
-  {
+  
     // Reaction body text
+    {
     reactionBody: {
       type: String,
       required: true,

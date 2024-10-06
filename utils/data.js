@@ -6,31 +6,31 @@ const users = [
     username: 'john_doe',
     email: 'john@example.com',
     thoughts: [],
-    friends: [] // This will be populated later with ObjectId references
+    friends: []
   },
   {
     username: 'jane_doe',
     email: 'jane@example.com',
     thoughts: [],
-    friends: [] // This will be populated later with ObjectId references
+    friends: [] 
   },
   {
     username: 'sam_smith',
     email: 'sam@example.com',
     thoughts: [],
-    friends: [] // This will be populated later with ObjectId references
+    friends: [] 
   },
   {
     username: 'sarawong',
     email: 'saraw@example.com',
     thoughts: [],
-    friends: [] // This will be populated later with ObjectId references
+    friends: [] 
   },
   {
     username: 'amykim',
     email: 'amykim@sample.com',
     thoughts: [],
-    friends: [] // This will be populated later with ObjectId references
+    friends: [] 
   },
 ];
 
