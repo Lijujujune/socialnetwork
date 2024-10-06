@@ -14,6 +14,7 @@
 The Social Network API is a back-end application that provides the essential functionality for a social network platform. Users can sign up, create thoughts (similar to posts), react to friends’ thoughts, and manage a list of friends. The API is built using Node.js and Express.js to handle the server-side operations, with MongoDB as the database to store user information, thoughts, and reactions. The Mongoose ODM is used for seamless data interaction with MongoDB. The API supports basic CRUD operations for users, thoughts, and reactions, making it a core backend for a social networking application.
 
 Github Repo: https://github.com/Lijujujune/socialnetwork
+
 Walkthrough video: https://bootcampspot.instructuremedia.com/embed/52e5611f-1bfc-401a-a881-efc9185a7841
 
  ## Installation
